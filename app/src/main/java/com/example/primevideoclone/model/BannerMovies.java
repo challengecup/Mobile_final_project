@@ -1,7 +1,5 @@
 package com.example.primevideoclone.model;
 
-import android.content.Intent;
-
 public class BannerMovies {
 
     Integer id;
