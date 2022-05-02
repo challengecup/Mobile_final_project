@@ -1,17 +1,21 @@
 package com.example.primevideoclone;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+import androidx.core.widget.NestedScrollView;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager.widget.ViewPager;
 
 import android.os.Bundle;
+import android.view.View;
 
 import com.example.primevideoclone.adapter.BannerMoviesPagerAdapter;
 import com.example.primevideoclone.adapter.MainRecycleAdapter;
 import com.example.primevideoclone.model.AllCategory;
 import com.example.primevideoclone.model.BannerMovies;
 import com.example.primevideoclone.model.CategoryItem;
+import com.google.android.material.appbar.AppBarLayout;
 import com.google.android.material.tabs.TabLayout;
 
 import java.util.ArrayList;
@@ -30,6 +34,9 @@ public class MainActivity extends AppCompatActivity {
     List<BannerMovies> kidsBannerList;
     Timer sliderTimer;
 
+    NestedScrollView nestedScrollView;
+    AppBarLayout appBarLayout;
+
     MainRecycleAdapter mainRecycleAdapter;
     RecyclerView mainRecycler;
     List<AllCategory> allCategoryList;
@@ -41,6 +48,8 @@ public class MainActivity extends AppCompatActivity {
 
         indicatorTab = findViewById(R.id.tab_indicator);
         categoryTab = findViewById(R.id.tabLayout);
+        nestedScrollView = findViewById(R.id.nested_scroll);
+        appBarLayout = findViewById(R.id.appbar);
 
         homeBannerList = new ArrayList<>();
         homeBannerList.add(new BannerMovies(1, "Hai Phuong", "https://i.postimg.cc/76Hzkv97/banner1.jpg", ""));
@@ -69,15 +78,19 @@ public class MainActivity extends AppCompatActivity {
             public void onTabSelected(TabLayout.Tab tab) {
                 switch (tab.getPosition()) {
                     case 1:
+                        setScrollDefaultState();
                         setBannerMoviesPagerAdapter(tvShowBannerList);
                         return;
                     case 2:
+                        setScrollDefaultState();
                         setBannerMoviesPagerAdapter(movieBannerList);
                         return;
                     case 3:
+                        setScrollDefaultState();
                         setBannerMoviesPagerAdapter(kidsBannerList);
                         return;
                     default:
+                        setScrollDefaultState();
                         setBannerMoviesPagerAdapter(homeBannerList);
                 }
             }
@@ -107,14 +120,21 @@ public class MainActivity extends AppCompatActivity {
 
         List<CategoryItem> homeCatListItem3 = new ArrayList<>();
         homeCatListItem3.add(new CategoryItem(1, "Dogs In Space", "https://i.postimg.cc/tRMrrTrP/banner19.png", ""));
-        homeCatListItem3.add(new CategoryItem(1, "A Tale Dark & Grimm", "https://i.postimg.cc/8cJxyrMK/banner20.jpg", ""));
-        homeCatListItem3.add(new CategoryItem(1, "Beat Bugs", "https://i.postimg.cc/65dBwD4H/banner21.png", ""));
-        homeCatListItem3.add(new CategoryItem(1, "Boss Baby", "https://i.postimg.cc/h4s0wGpM/banner22.jpg", ""));
+        homeCatListItem3.add(new CategoryItem(2, "A Tale Dark & Grimm", "https://i.postimg.cc/8cJxyrMK/banner20.jpg", ""));
+        homeCatListItem3.add(new CategoryItem(3, "Beat Bugs", "https://i.postimg.cc/65dBwD4H/banner21.png", ""));
+        homeCatListItem3.add(new CategoryItem(4, "Boss Baby", "https://i.postimg.cc/h4s0wGpM/banner22.jpg", ""));
+
+        List<CategoryItem> homeCatListItem4 = new ArrayList<>();
+        homeCatListItem4.add(new CategoryItem(1, "Deadliest Catch", "https://i.postimg.cc/pdDLBH78/banner23.jpg", ""));
+        homeCatListItem4.add(new CategoryItem(2, "Cal Fire", "https://i.postimg.cc/yN7wwCx0/banner24.jpg", ""));
+        homeCatListItem4.add(new CategoryItem(3, "Man vs. Wild", "https://i.postimg.cc/vT5JJYrL/banner25.jpg", ""));
+        homeCatListItem4.add(new CategoryItem(4, "How The Universe Works", "https://i.postimg.cc/RVXsNJZJ/banner26.jpg", ""));
 
         allCategoryList = new ArrayList<>();
         allCategoryList.add(new AllCategory(1, "Watch next TV and movies", homeCatListItem1));
         allCategoryList.add(new AllCategory(2, "Friends series",homeCatListItem2));
         allCategoryList.add(new AllCategory(3, "Kids movies",homeCatListItem3));
+        allCategoryList.add(new AllCategory(4, "Discovery channel",homeCatListItem4));
 
         setMainRecycler(allCategoryList);
 
@@ -155,6 +175,14 @@ public class MainActivity extends AppCompatActivity {
         mainRecycler.setLayoutManager(layoutManager);
         mainRecycleAdapter = new MainRecycleAdapter(this, allCategoryList);
         mainRecycler.setAdapter(mainRecycleAdapter);
+
+    }
+
+    private void setScrollDefaultState(){
+
+        nestedScrollView.fullScroll(View.FOCUS_UP);
+        nestedScrollView.scrollTo(0,0);
+        appBarLayout.setExpanded(true);
 
     }
 
