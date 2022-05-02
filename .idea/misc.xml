@@ -3,6 +3,8 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/PrimeVideoClone/app/src/main/res/drawable-v24/unselected.xml" value="0.1" />
+        <entry key="..\:/PrimeVideoClone/app/src/main/res/drawable/indicator_selector.xml" value="0.1" />
         <entry key="..\:/PrimeVideoClone/app/src/main/res/drawable/selected.xml" value="0.1" />
         <entry key="..\:/PrimeVideoClone/app/src/main/res/layout/activity_main.xml" value="0.22" />
         <entry key="..\:/PrimeVideoClone/app/src/main/res/layout/banner_movie_layout.xml" value="0.2" />
