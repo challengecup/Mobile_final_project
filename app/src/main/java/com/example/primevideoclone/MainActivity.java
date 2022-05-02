@@ -11,6 +11,7 @@ import com.example.primevideoclone.adapter.BannerMoviesPagerAdapter;
 import com.example.primevideoclone.adapter.MainRecycleAdapter;
 import com.example.primevideoclone.model.AllCategory;
 import com.example.primevideoclone.model.BannerMovies;
+import com.example.primevideoclone.model.CategoryItem;
 import com.google.android.material.tabs.TabLayout;
 
 import java.util.ArrayList;
@@ -92,10 +93,21 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        List<CategoryItem> homeCatListItem1 = new ArrayList<>();
+        homeCatListItem1.add(new CategoryItem(1, "Love & Other Drugs", "https://i.postimg.cc/qBXfSkd7/banner11.jpg", ""));
+        homeCatListItem1.add(new CategoryItem(2, "Bewakoofiyaan", "https://i.postimg.cc/Fzh6NLQH/banner12.jpg", ""));
+        homeCatListItem1.add(new CategoryItem(3, "Supernatural", "https://i.postimg.cc/43zwyxP7/banner13.jpg", ""));
+        homeCatListItem1.add(new CategoryItem(4, "Sweet Home", "https://i.postimg.cc/3wHCsHhK/banner14.jpg", ""));
+
+        List<CategoryItem> homeCatListItem2 = new ArrayList<>();
+        homeCatListItem2.add(new CategoryItem(1, "Season 1", "https://i.postimg.cc/vmV86px6/banner15.jpg", ""));
+        homeCatListItem2.add(new CategoryItem(2, "Season 2", "https://i.postimg.cc/50JJQjMZ/banner16.jpg", ""));
+        homeCatListItem2.add(new CategoryItem(3, "Season 3", "https://i.postimg.cc/y87rR9Jh/banner17.jpg", ""));
+        homeCatListItem2.add(new CategoryItem(4, "Season 4", "https://i.postimg.cc/D0dPfjP9/banner18.jpg", ""));
+
         allCategoryList = new ArrayList<>();
-        allCategoryList.add(new AllCategory(1, "Hollywood"));
-        allCategoryList.add(new AllCategory(2, "Hollywood"));
-        allCategoryList.add(new AllCategory(3, "Kids"));
+        allCategoryList.add(new AllCategory(1, "Watch next TV and movies", homeCatListItem1));
+        allCategoryList.add(new AllCategory(2, "Friends series",homeCatListItem2));
 
         setMainRecycler(allCategoryList);
 
