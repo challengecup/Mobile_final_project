@@ -105,9 +105,16 @@ public class MainActivity extends AppCompatActivity {
         homeCatListItem2.add(new CategoryItem(3, "Season 3", "https://i.postimg.cc/y87rR9Jh/banner17.jpg", ""));
         homeCatListItem2.add(new CategoryItem(4, "Season 4", "https://i.postimg.cc/D0dPfjP9/banner18.jpg", ""));
 
+        List<CategoryItem> homeCatListItem3 = new ArrayList<>();
+        homeCatListItem3.add(new CategoryItem(1, "Dogs In Space", "https://i.postimg.cc/tRMrrTrP/banner19.png", ""));
+        homeCatListItem3.add(new CategoryItem(1, "A Tale Dark & Grimm", "https://i.postimg.cc/8cJxyrMK/banner20.jpg", ""));
+        homeCatListItem3.add(new CategoryItem(1, "Beat Bugs", "https://i.postimg.cc/65dBwD4H/banner21.png", ""));
+        homeCatListItem3.add(new CategoryItem(1, "Boss Baby", "https://i.postimg.cc/h4s0wGpM/banner22.jpg", ""));
+
         allCategoryList = new ArrayList<>();
         allCategoryList.add(new AllCategory(1, "Watch next TV and movies", homeCatListItem1));
         allCategoryList.add(new AllCategory(2, "Friends series",homeCatListItem2));
+        allCategoryList.add(new AllCategory(3, "Kids movies",homeCatListItem3));
 
         setMainRecycler(allCategoryList);
 
