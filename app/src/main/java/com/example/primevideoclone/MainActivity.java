@@ -1,11 +1,15 @@
 package com.example.primevideoclone;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager.widget.ViewPager;
 
 import android.os.Bundle;
 
 import com.example.primevideoclone.adapter.BannerMoviesPagerAdapter;
+import com.example.primevideoclone.adapter.MainRecycleAdapter;
+import com.example.primevideoclone.model.AllCategory;
 import com.example.primevideoclone.model.BannerMovies;
 import com.google.android.material.tabs.TabLayout;
 
@@ -23,6 +27,11 @@ public class MainActivity extends AppCompatActivity {
     List<BannerMovies> tvShowBannerList;
     List<BannerMovies> movieBannerList;
     List<BannerMovies> kidsBannerList;
+    Timer sliderTimer;
+
+    MainRecycleAdapter mainRecycleAdapter;
+    RecyclerView mainRecycler;
+    List<AllCategory> allCategoryList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,7 +60,7 @@ public class MainActivity extends AppCompatActivity {
         kidsBannerList.add(new BannerMovies(1, "Phineas and Ferb", "https://i.postimg.cc/CKvpZVGS/banner10.jpg", ""));
 
         //Default tab
-        setBannerMoviesPagerAdapter(homeBannerList);
+       setBannerMoviesPagerAdapter(homeBannerList);
 
         //Selected category
         categoryTab.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
@@ -82,6 +91,14 @@ public class MainActivity extends AppCompatActivity {
 
             }
         });
+
+        allCategoryList = new ArrayList<>();
+        allCategoryList.add(new AllCategory(1, "Hollywood"));
+        allCategoryList.add(new AllCategory(2, "Hollywood"));
+        allCategoryList.add(new AllCategory(3, "Kids"));
+
+        setMainRecycler(allCategoryList);
+
     }
 
     private void setBannerMoviesPagerAdapter(List<BannerMovies> bannerMoviesList) {
@@ -90,7 +107,7 @@ public class MainActivity extends AppCompatActivity {
         bannerMoviesViewPager.setAdapter(bannerMoviesPagerAdapter);
         indicatorTab.setupWithViewPager(bannerMoviesViewPager);
 
-        Timer sliderTimer = new Timer();
+        sliderTimer = new Timer();
         sliderTimer.scheduleAtFixedRate(new AutoSlider(), 4000, 6000);
         indicatorTab.setupWithViewPager(bannerMoviesViewPager, true);
     }
@@ -111,4 +128,15 @@ public class MainActivity extends AppCompatActivity {
 
         }
     }
+
+    public void setMainRecycler(List<AllCategory> allCategoryList) {
+
+        mainRecycler = findViewById(R.id.main_recycler);
+        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this, RecyclerView.VERTICAL, false);
+        mainRecycler.setLayoutManager(layoutManager);
+        mainRecycleAdapter = new MainRecycleAdapter(this, allCategoryList);
+        mainRecycler.setAdapter(mainRecycleAdapter);
+
+    }
+
 }
