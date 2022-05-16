@@ -2,6 +2,7 @@ package com.example.primevideoclone.model;
 
 public class BannerMovies {
 
+    Integer bannerCategoryId;
     Integer id;
     String movieName;
     String imageUrl;
@@ -12,6 +13,14 @@ public class BannerMovies {
         this.movieName = movieName;
         this.imageUrl = imageUrl;
         this.fileUrl = fileUrl;
+    }
+
+    public Integer getBannerCategoryId() {
+        return bannerCategoryId;
+    }
+
+    public void setBannerCategoryId(Integer bannerCategoryId) {
+        this.bannerCategoryId = bannerCategoryId;
     }
 
     public Integer getId() {
