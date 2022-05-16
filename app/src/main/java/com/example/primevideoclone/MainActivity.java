@@ -2,6 +2,7 @@ package com.example.primevideoclone;
 
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.widget.NestedScrollView;
@@ -14,6 +15,7 @@ import com.example.primevideoclone.adapter.MainRecycleAdapter;
 import com.example.primevideoclone.model.AllCategory;
 import com.example.primevideoclone.model.BannerMovies;
 import com.example.primevideoclone.model.CategoryItem;
+import com.example.primevideoclone.retrofit.RetrofitClient;
 import com.google.android.material.appbar.AppBarLayout;
 import com.google.android.material.tabs.TabLayout;
 
@@ -21,6 +23,11 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
+
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.CompositeDisposable;
+import io.reactivex.observers.DisposableObserver;
+import io.reactivex.schedulers.Schedulers;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -51,25 +58,13 @@ public class MainActivity extends AppCompatActivity {
         appBarLayout = findViewById(R.id.appbar);
 
         homeBannerList = new ArrayList<>();
-        homeBannerList.add(new BannerMovies(1, "Hai Phuong", "https://i.postimg.cc/76Hzkv97/banner1.jpg", "https://videosstreaming18520726.000webhostapp.com/videos/url1.mp4"));
-        homeBannerList.add(new BannerMovies(2, "Bo Gia", "https://i.postimg.cc/prgyy3fs/banner2.jpg", "https://videosstreaming18520726.000webhostapp.com/videos/url2.mp4"));
-        homeBannerList.add(new BannerMovies(3, "Fast & Furious", "https://i.postimg.cc/hhRBStKt/banner3.jpg", "https://videosstreaming18520726.000webhostapp.com/videos/ur3.mp4"));
-        homeBannerList.add(new BannerMovies(4, "Doctor Strange", "https://i.postimg.cc/ydwdZB7w/banner4.jpg", "https://videosstreaming18520726.000webhostapp.com/videos/ur4.mp4"));
-
         tvShowBannerList = new ArrayList<>();
-        tvShowBannerList.add(new BannerMovies(1, "RAPVIET", "https://i.postimg.cc/LXVCq4ks/banner5.jpg", "https://rr7---sn-8pxuuxa-nbozr.googlevideo.com/videoplayback?expire=1652283326&ei=XoN7YqmCB9CW2_gPivKM6AE&ip=216.131.106.187&id=o-AAS4HK4ws0FF31t5d0kkZrXVGMk8ysz4VsP5DGhFIZQi&itag=18&source=youtube&requiressl=yes&spc=4ocVC-LIM1ROS6dEWOTmnacQE51J&vprv=1&mime=video%2Fmp4&ns=w06eN9-bueaJAoHN9vIbAEkG&gir=yes&clen=243234764&ratebypass=yes&dur=2659.799&lmt=1647419816252613&fexp=24001373,24007246&c=WEB&txp=5438434&n=93h7Z9EhN5GS4w&sparams=expire%2Cei%2Cip%2Cid%2Citag%2Csource%2Crequiressl%2Cspc%2Cvprv%2Cmime%2Cns%2Cgir%2Cclen%2Cratebypass%2Cdur%2Clmt&sig=AOq0QJ8wRAIgT-Yj9T2iqa3sXoHoPEvMjEhVGWo8yRn7ra2UP9yuj00CIEFeUeRzvUlpdwPC_WdCHjXaeaEshWKNf5zUTkad-Uy9&redirect_counter=1&rm=sn-vgqezl7s&req_id=6346d79205b0a3ee&cms_redirect=yes&cmsv=e&ipbypass=yes&mh=ID&mip=2402:800:6375:5e8:3d26:264c:95dd:a3a7&mm=31&mn=sn-8pxuuxa-nbozr&ms=au&mt=1652260889&mv=u&mvi=7&pl=48&lsparams=ipbypass,mh,mip,mm,mn,ms,mv,mvi,pl&lsig=AG3C_xAwRgIhAMTU817HG_1yLx5SapXRBO-vyzwHsKc7iqsrjPLPL8ZqAiEA0Ku34bzEsU4THG5HJIOdAQCjUVFry1od4RockG20m9Y%3D"));
-        tvShowBannerList.add(new BannerMovies(2, "On Gioi Cau Day Roi", "https://i.postimg.cc/7Z7NGYwy/banner6.jpg", "https://videosstreaming18520726.000webhostapp.com/videos/url6.mp4"));
-
         movieBannerList = new ArrayList<>();
-        movieBannerList.add(new BannerMovies(1, "A Beautiful Day", "https://i.postimg.cc/tT5yNxGQ/banner7.jpg", "https://videosstreaming18520726.000webhostapp.com/videos/url7.mp4"));
-        movieBannerList.add(new BannerMovies(2, "Crash Landing On You", "https://i.postimg.cc/mgMvSH7X/banner8.jpg", "https://videosstreaming18520726.000webhostapp.com/videos/url8.mp4"));
-
         kidsBannerList = new ArrayList<>();
-        kidsBannerList.add(new BannerMovies(1, "BoBoiBoy", "https://i.postimg.cc/BnB00Ft8/banner9.jpg", "https://videosstreaming18520726.000webhostapp.com/videos/url9.mp4"));
-        kidsBannerList.add(new BannerMovies(1, "Phineas and Ferb", "https://i.postimg.cc/CKvpZVGS/banner10.jpg", "https://videosstreaming18520726.000webhostapp.com/videos/url10.mp4"));
 
-        //Default tab
-       setBannerMoviesPagerAdapter(homeBannerList);
+        getBannerData();
+
+
 
         //Selected category
         categoryTab.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
@@ -137,6 +132,7 @@ public class MainActivity extends AppCompatActivity {
 
         setMainRecycler(allCategoryList);
 
+
     }
 
     private void setBannerMoviesPagerAdapter(List<BannerMovies> bannerMoviesList) {
@@ -182,6 +178,47 @@ public class MainActivity extends AppCompatActivity {
         nestedScrollView.fullScroll(View.FOCUS_UP);
         nestedScrollView.scrollTo(0,0);
         appBarLayout.setExpanded(true);
+
+    }
+
+    private void getBannerData(){
+
+        CompositeDisposable compositeDisposable = new CompositeDisposable();
+
+        compositeDisposable.add(RetrofitClient.getApi().getAllBanners()
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeWith(new DisposableObserver<List<BannerMovies>>() {
+                    @Override
+                    public void onNext(List<BannerMovies> bannerMovies) {
+
+                        for (int i = 0; i < bannerMovies.size(); i++){
+                            if(bannerMovies.get(i).getBannerCategoryId().toString().equals("1")){
+                                homeBannerList.add(bannerMovies.get(i));
+                            }else if(bannerMovies.get(i).getBannerCategoryId().toString().equals("2")){
+                                tvShowBannerList.add(bannerMovies.get(i));
+                            }else if(bannerMovies.get(1).getBannerCategoryId().toString().equals("3")){
+                                movieBannerList.add(bannerMovies.get(i));
+                            }else if(bannerMovies.get(i).getBannerCategoryId().toString().equals("4")){
+                                kidsBannerList.add(bannerMovies.get(i));
+                            }else{
+
+                            }
+                        }
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+
+                    }
+
+                    @Override
+                    public void onComplete() {
+                        //Default tab
+                        setBannerMoviesPagerAdapter(homeBannerList);
+                    }
+                })
+        );
 
     }
 
